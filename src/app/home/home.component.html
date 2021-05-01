@@ -1,0 +1,15 @@
+<div class="main">
+	<aside class="left">
+		<h1 class="title">Car</h1>
+		<ul class="list" *ngFor="let item of car">
+			<li>{{item.name}}<span>{{item.total}}</span><button (click)="removeItem(item.id)">remove</button></li>
+		</ul>
+	</aside>
+	<aside class="right">
+		<h1 class="title">Items</h1>
+		<ul class="listProducts" *ngFor="let item of items">
+			<li>{{item.name}} <button (click)="addNewItem(item.name, item.id)">Add</button></li>
+		</ul>
+	</aside>
+</div>
+
