@@ -10,7 +10,10 @@ type Items = Array<{name: string; id: string; }>;
 })
 
 export class HomeComponent implements OnInit {
-  constructor() { }
+	constructor() { }
+
+	name: string = "";
+	modalIsOpened: boolean = false;
 
 	car: Car | null = [];
 	items: Items = [
@@ -32,6 +35,28 @@ export class HomeComponent implements OnInit {
 			id: '4',
 		},
 	];
+
+	closeModal(): void {
+		this.modalIsOpened = false;
+	}
+
+	openModal(): void {
+		this.modalIsOpened = true;
+	}
+
+	confirm(): void {
+		this.closeModal();
+		if (this.name.length === 0) {
+			alert('please enter a name to buy!');
+		} else {
+			this.car = null;
+			alert("Done! your products are sent to you!");
+		}
+	}
+
+	cancel(): void {
+		this.closeModal();
+	}
 
 	addNewItem(name: string, id: string): void {
 		if (this.car !== null) {
@@ -71,6 +96,40 @@ export class HomeComponent implements OnInit {
 				}
 			} else {
 				this.car = this.car.filter(i => i.id !== id);
+			}
+		}
+	}
+
+	removeValue(event: any): void {
+		if (this.name.length === 0) {
+			event.target.textContent = "";
+		}
+	}
+
+	changeName(event: any): void {
+		const key: string = event.key;
+		if (key === "Enter") {
+			event.target.blur();
+		}
+
+		if ('abcdefghijklmnopqrstuvwxyz0123456789.backspaceshiftarrowleftarrowright'.indexOf(key.toLowerCase()) !== -1) {
+			this.name = event.target.textContent;
+		} else {
+			event.preventDefault();
+		}
+	}
+
+	verifyInput(event: any): void {
+		if (this.name.length === 0) {
+			event.target.classList.add('unamed');
+			event.target.textContent = "unamed";
+		} 
+	}
+
+	buy(): void {
+		if (this.car !== null) {
+			if (this.car.length > 0) {
+				this.openModal();
 			}
 		}
 	}

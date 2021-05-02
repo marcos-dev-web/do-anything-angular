@@ -1,15 +1,49 @@
+<header class="header">
+	<h1
+			class="{{name.length > 0 ? 'user' : 'unamed'}}" 
+		contenteditable
+		(keydown)="changeName($event)"
+		(click)="removeValue($event)"
+		(blur)="verifyInput($event)"
+		>{{name.length > 0 ? name : "unamed"}}</h1>
+</header>
+<div class="modal {{modalIsOpened ? 'open' : 'close'}}">
+	<div class="center">
+		<div class="content">
+			<h1>Items</h1>
+			<ul>
+				<li *ngFor="let item of car">
+					<span>name: {{item.name}}</span><span>total: {{item.total}}</span>
+				</li>
+			</ul>
+		</div>
+		<div class="buttons">
+			<button class="cancel" (click)="cancel()">Cancel</button>
+			<button class="confirm" (click)="confirm()">Confirm</button>
+		</div>
+	</div>
+</div>
 <div class="main">
 	<aside class="left">
 		<h1 class="title">Car</h1>
-		<ul class="list" *ngFor="let item of car">
-			<li>{{item.name}}<span>{{item.total}}</span><button (click)="removeItem(item.id)">remove</button></li>
+		<ul class="list">
+			<li *ngFor="let item of car">
+				{{item.name}}<span>{{item.total}}</span><button (click)="removeItem(item.id)">remove</button>
+			</li>
 		</ul>
 	</aside>
 	<aside class="right">
-		<h1 class="title">Items</h1>
-		<ul class="listProducts" *ngFor="let item of items">
-			<li>{{item.name}} <button (click)="addNewItem(item.name, item.id)">Add</button></li>
-		</ul>
+		<div>
+			<h1 class="title">Items</h1>
+			<ul class="listProducts">
+				<li *ngFor="let item of items">
+					{{item.name}} <button (click)="addNewItem(item.name, item.id)">Add</button>
+				</li>
+			</ul>
+		</div>
+		<div id="buttons">
+			<button class="buy {{car === null || car.length === 0 ? 'gray' : 'green'}}" (click)="buy()">Buy</button>
+		</div>
 	</aside>
 </div>
 
